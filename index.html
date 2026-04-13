@@ -2,15 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Janica Grading System · GWA Tracker</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%234f8ef7'/><stop offset='100%25' stop-color='%237c5cfc'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='url(%23g)'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='28' fill='white'>GS</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-  <script>
-    function toggleSidebar() {
-      document.getElementById("sidebar").classList.toggle("open");
-    }
-  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -30,14 +25,16 @@
       --text-soft: #9ba5c4;
       --radius: 14px;
       --radius-sm: 8px;
+      --header-h: 66px;
     }
+
+    html { -webkit-text-size-adjust: 100%; }
 
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      padding: 0;
       overflow-x: hidden;
     }
 
@@ -54,60 +51,91 @@
 
     /* ─── HEADER ─── */
     header {
-      position: relative;
-      z-index: 10;
-      padding: 22px 24px 0;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(13,15,20,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 16px;
+      height: var(--header-h);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
     }
 
-    .header-left { display: flex; align-items: center; gap: 14px; }
+    .header-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
 
     .logo-mark {
-      width: 42px; height: 42px;
-      border-radius: 12px;
+      width: 38px; height: 38px;
+      border-radius: 10px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       display: flex; align-items: center; justify-content: center;
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: 18px;
+      font-size: 16px;
       color: #fff;
       flex-shrink: 0;
-      box-shadow: 0 0 24px rgba(79,142,247,0.35);
+      box-shadow: 0 0 20px rgba(79,142,247,0.3);
     }
 
     .header-title h1 {
       font-family: 'Syne', sans-serif;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
       color: var(--text);
       letter-spacing: -0.3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .header-title p {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
       letter-spacing: 0.5px;
       text-transform: uppercase;
     }
 
-    /* ─── MOBILE TOGGLE ─── */
-    .sidebar-toggle {
+    .header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+    /* ─── MOBILE NAV TOGGLE ─── */
+    .nav-toggle {
       display: none;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border: none;
+      background: var(--surface2);
+      border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      color: #fff;
-      padding: 9px 14px;
+      color: var(--text);
+      padding: 8px 10px;
       font-size: 13px;
       font-family: 'DM Sans', sans-serif;
       font-weight: 500;
       cursor: pointer;
-      gap: 6px;
       align-items: center;
-      box-shadow: 0 4px 12px rgba(79,142,247,0.3);
+      gap: 6px;
+    }
+
+    /* ─── DRAWER OVERLAY ─── */
+    .drawer-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 300;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    .drawer-overlay.open { display: block; }
+
+    /* ─── SIDEBAR / DRAWER ─── */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      z-index: 1;
     }
 
     /* ─── MAIN LAYOUT ─── */
@@ -115,25 +143,19 @@
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: 300px 1fr;
-      gap: 20px;
-      max-width: 1200px;
-      margin: 24px auto 40px;
-      padding: 0 20px;
+      grid-template-columns: 280px 1fr;
+      gap: 18px;
+      max-width: 1240px;
+      margin: 20px auto 48px;
+      padding: 0 18px;
     }
 
-    /* ─── SIDEBAR ─── */
-    .sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
+    /* ─── CARD ─── */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 20px;
+      padding: 18px;
       transition: border-color 0.2s;
     }
     .card:hover { border-color: #303550; }
@@ -150,17 +172,16 @@
       align-items: center;
       gap: 8px;
     }
-
     .card-label::before {
       content: '';
-      width: 16px; height: 2px;
+      width: 14px; height: 2px;
       background: linear-gradient(to right, var(--accent), var(--accent2));
       border-radius: 2px;
+      flex-shrink: 0;
     }
 
     /* ─── SELECT ─── */
     .select-wrapper { position: relative; }
-
     select {
       width: 100%;
       appearance: none;
@@ -170,17 +191,16 @@
       color: var(--text);
       font-family: 'DM Sans', sans-serif;
       font-size: 14px;
-      padding: 10px 36px 10px 14px;
+      padding: 10px 36px 10px 13px;
       cursor: pointer;
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
     select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
-
     .select-wrapper::after {
       content: '▾';
       position: absolute;
-      right: 12px; top: 50%;
+      right: 11px; top: 50%;
       transform: translateY(-50%);
       color: var(--text-muted);
       pointer-events: none;
@@ -188,20 +208,17 @@
     }
 
     /* ─── INPUTS ─── */
-    .form-group { margin-bottom: 11px; }
-
+    .form-group { margin-bottom: 10px; }
     .form-group label {
       display: block;
       font-size: 11px;
       font-weight: 500;
       color: var(--text-soft);
       letter-spacing: 0.4px;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
       text-transform: uppercase;
     }
-
-    input[type="text"],
-    input[type="number"] {
+    input[type="text"], input[type="number"] {
       width: 100%;
       background: var(--surface2);
       border: 1px solid var(--border);
@@ -209,17 +226,18 @@
       color: var(--text);
       font-family: 'DM Sans', sans-serif;
       font-size: 14px;
-      padding: 9px 14px;
+      padding: 9px 13px;
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
     }
     input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
     input::placeholder { color: var(--text-muted); }
 
     /* ─── BUTTONS ─── */
     .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
-      padding: 9px 16px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 9px 14px;
       border: none;
       border-radius: var(--radius-sm);
       font-family: 'DM Sans', sans-serif;
@@ -228,42 +246,39 @@
       cursor: pointer;
       transition: all 0.15s;
       white-space: nowrap;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
-
     .btn-primary {
       width: 100%;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       color: #fff;
-      box-shadow: 0 4px 14px rgba(79,142,247,0.25);
+      box-shadow: 0 4px 12px rgba(79,142,247,0.22);
     }
-    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(79,142,247,0.35); }
-    .btn-primary:active { transform: translateY(0); }
-
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); opacity: 1; }
     .btn-danger {
       background: rgba(248,113,113,0.1);
       color: var(--danger);
       border: 1px solid rgba(248,113,113,0.2);
-      padding: 5px 10px;
+      padding: 6px 10px;
       font-size: 12px;
     }
     .btn-danger:hover { background: rgba(248,113,113,0.18); }
-
     .btn-warning {
       background: rgba(251,191,36,0.1);
       color: var(--warning);
       border: 1px solid rgba(251,191,36,0.2);
-      padding: 5px 10px;
+      padding: 6px 10px;
       font-size: 12px;
     }
     .btn-warning:hover { background: rgba(251,191,36,0.18); }
-
     .btn-ghost {
       background: transparent;
       color: var(--text-muted);
       border: 1px solid var(--border);
     }
     .btn-ghost:hover { background: var(--surface2); color: var(--text); }
-
     .btn-row {
       display: flex;
       gap: 8px;
@@ -272,25 +287,23 @@
     .btn-row .btn-primary { flex: 1; width: auto; }
 
     /* ─── MAIN CONTENT ─── */
-    .main { display: flex; flex-direction: column; gap: 14px; }
+    .main { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 
-    /* ─── STUDENT INFO BAR ─── */
+    /* ─── STUDENT BAR ─── */
     .student-bar {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 16px 20px;
+      padding: 15px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
       flex-wrap: wrap;
     }
-
-    .student-info { display: flex; align-items: center; gap: 12px; }
-
+    .student-info { display: flex; align-items: center; gap: 11px; min-width: 0; flex: 1; }
     .avatar {
-      width: 42px; height: 42px;
+      width: 40px; height: 40px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       display: flex; align-items: center; justify-content: center;
@@ -300,34 +313,23 @@
       color: #fff;
       flex-shrink: 0;
     }
-
+    .student-details { min-width: 0; }
     .student-details h3 {
       font-family: 'Syne', sans-serif;
       font-size: 15px;
       font-weight: 700;
       color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    .student-details p {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
+    .student-details p { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
     .bar-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-
-    .gwa-display { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-
-    .gwa-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
+    .gwa-display { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
+    .gwa-label { font-size: 10px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); }
     .gwa-value {
       font-family: 'Syne', sans-serif;
-      font-size: 30px;
+      font-size: 28px;
       font-weight: 800;
       line-height: 1;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
@@ -335,7 +337,6 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-
     .gwa-remark {
       font-size: 11px;
       font-weight: 500;
@@ -343,67 +344,43 @@
       border-radius: 99px;
       margin-top: 3px;
     }
-
     .bar-actions { display: flex; gap: 6px; align-items: center; }
 
     /* ─── STATS ROW ─── */
     .stats-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap: 10px;
     }
-
     .stat-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 14px 16px;
+      padding: 13px 15px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
+    .stat-card .stat-val { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--text); }
+    .stat-card .stat-lbl { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; }
+    .stat-card .stat-dot { width: 6px; height: 6px; border-radius: 50%; margin-bottom: 3px; }
 
-    .stat-card .stat-val {
-      font-family: 'Syne', sans-serif;
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--text);
-    }
-    .stat-card .stat-lbl {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-    }
-    .stat-card .stat-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      margin-bottom: 4px;
-    }
-
-    /* ─── TABLE ─── */
+    /* ─── TABLE WRAPPER ─── */
     .table-wrapper {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
     }
-
     .table-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 20px 12px;
+      padding: 14px 18px 12px;
       border-bottom: 1px solid var(--border);
+      gap: 8px;
     }
-
-    .table-header h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
+    .table-header h3 { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); }
     .subject-count {
       font-size: 11px;
       color: var(--text-muted);
@@ -411,18 +388,11 @@
       border: 1px solid var(--border);
       border-radius: 99px;
       padding: 2px 10px;
+      white-space: nowrap;
     }
-
-    .table-scroll { overflow-x: auto; }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 700px;
-    }
-
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { width: 100%; border-collapse: collapse; min-width: 620px; }
     thead tr { background: var(--surface2); }
-
     th {
       font-family: 'Syne', sans-serif;
       font-size: 10px;
@@ -430,106 +400,34 @@
       letter-spacing: 1px;
       text-transform: uppercase;
       color: var(--text-muted);
-      padding: 10px 12px;
+      padding: 9px 11px;
       text-align: left;
       border-bottom: 1px solid var(--border);
       white-space: nowrap;
     }
-
     th.th-center { text-align: center; }
     th:last-child { text-align: right; }
-
     td {
-      padding: 10px 12px;
+      padding: 9px 11px;
       font-size: 13px;
       color: var(--text);
       border-bottom: 1px solid rgba(37,42,56,0.6);
       vertical-align: middle;
     }
-
     tbody tr:last-child td { border-bottom: none; }
     tbody tr { transition: background 0.15s; }
     tbody tr:hover { background: rgba(255,255,255,0.02); }
+    .subject-name { font-weight: 500; font-size: 13px; }
 
-    .subject-name { font-weight: 500; font-size: 14px; }
-
-    /* ─── COMPONENT GRADE INPUTS ─── */
-    .comp-input-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-    }
-
-    .comp-label {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .comp-input-wrap input[type="number"] {
-      width: 62px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      color: var(--text);
-      font-family: 'Syne', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 5px 6px;
-      text-align: center;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-    .comp-input-wrap input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
-    }
-
-    /* ─── FINAL GRADE DISPLAY ─── */
-    .final-grade-cell {
-      text-align: center;
-    }
-
-    .final-grade-badge {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 5px 10px;
-      min-width: 58px;
-    }
-
-    .final-grade-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 15px;
-      font-weight: 800;
-    }
-
-    .final-grade-rmk {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-
-    .td-action { text-align: right; }
-    .td-action-inner { display: flex; gap: 6px; justify-content: flex-end; }
-
-    /* ─── COMPONENT WEIGHT LEGEND ─── */
+    /* ─── WEIGHT LEGEND ─── */
     .weight-legend {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
-      padding: 10px 20px;
+      padding: 9px 18px;
       border-bottom: 1px solid var(--border);
       background: rgba(26,30,42,0.5);
     }
-
     .weight-chip {
       display: flex;
       align-items: center;
@@ -539,28 +437,32 @@
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 99px;
-      padding: 3px 10px;
+      padding: 3px 9px;
     }
+    .weight-chip .dot { width: 6px; height: 6px; border-radius: 50%; }
 
-    .weight-chip .dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
+    /* ─── FINAL GRADE BADGE ─── */
+    .final-grade-cell { text-align: center; }
+    .final-grade-badge {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 4px 8px;
+      min-width: 54px;
     }
+    .final-grade-num { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 800; }
+    .final-grade-rmk { font-size: 9px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+    .td-action { text-align: right; }
+    .td-action-inner { display: flex; gap: 5px; justify-content: flex-end; }
 
     /* ─── EMPTY STATE ─── */
-    .empty-state {
-      padding: 48px 24px;
-      text-align: center;
-    }
-    .empty-state .empty-icon {
-      font-size: 38px;
-      margin-bottom: 10px;
-      opacity: 0.4;
-    }
-    .empty-state p {
-      font-size: 14px;
-      color: var(--text-muted);
-    }
+    .empty-state { padding: 44px 20px; text-align: center; }
+    .empty-state .empty-icon { font-size: 34px; margin-bottom: 10px; opacity: 0.4; }
+    .empty-state p { font-size: 14px; color: var(--text-muted); }
 
     /* ─── MODAL ─── */
     .modal-overlay {
@@ -568,65 +470,75 @@
       inset: 0;
       background: rgba(0,0,0,0.65);
       backdrop-filter: blur(4px);
-      z-index: 1000;
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 500;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
-      padding: 20px;
+      padding: 0;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.2s;
     }
     .modal-overlay.open { opacity: 1; pointer-events: all; }
-
     .modal {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 26px;
+      border-radius: var(--radius) var(--radius) 0 0;
+      padding: 22px 20px 32px;
       width: 100%;
-      max-width: 480px;
-      transform: translateY(20px);
-      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      max-width: 520px;
+      max-height: 92vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      transform: translateY(30px);
+      transition: transform 0.28s cubic-bezier(0.34,1.4,0.64,1);
     }
     .modal-overlay.open .modal { transform: translateY(0); }
+
+    /* Drag handle */
+    .modal::before {
+      content: '';
+      display: block;
+      width: 36px; height: 4px;
+      background: var(--border);
+      border-radius: 99px;
+      margin: 0 auto 18px;
+    }
 
     .modal-title {
       font-family: 'Syne', sans-serif;
       font-size: 16px;
       font-weight: 700;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-
-    .modal-form-group { margin-bottom: 12px; }
+    .modal-form-group { margin-bottom: 11px; }
     .modal-form-group label {
       display: block;
       font-size: 11px;
       font-weight: 500;
       color: var(--text-soft);
       letter-spacing: 0.4px;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
       text-transform: uppercase;
     }
 
-    /* ─── GRADE COMPONENT GRID IN MODAL ─── */
+    /* ─── COMPONENT GRID ─── */
     .comp-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 16px;
+      gap: 9px;
+      margin-bottom: 14px;
     }
-
     .comp-grid-item {
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 10px 12px;
+      padding: 10px 11px;
     }
-
     .comp-grid-item label {
       display: flex;
       align-items: center;
@@ -638,7 +550,6 @@
       text-transform: uppercase;
       margin-bottom: 6px;
     }
-
     .comp-grid-item .pct-badge {
       font-size: 10px;
       font-weight: 700;
@@ -647,7 +558,6 @@
       border-radius: 99px;
       padding: 1px 7px;
     }
-
     .comp-grid-item input {
       background: var(--bg);
       border: 1px solid var(--border);
@@ -659,13 +569,12 @@
       padding: 7px 10px;
       width: 100%;
       text-align: center;
-    }
-    .comp-grid-item input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
       outline: none;
+      -webkit-appearance: none;
     }
+    .comp-grid-item input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
 
+    /* ─── MODAL PREVIEW ─── */
     .modal-preview {
       display: flex;
       align-items: center;
@@ -673,83 +582,129 @@
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 12px 16px;
-      margin-bottom: 16px;
+      padding: 11px 15px;
+      margin-bottom: 14px;
     }
-
-    .modal-preview .preview-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .modal-preview .preview-grade {
-      font-family: 'Syne', sans-serif;
-      font-size: 24px;
-      font-weight: 800;
-    }
-
-    .modal-preview .preview-remark {
-      font-size: 12px;
-      font-weight: 500;
-    }
+    .modal-preview .preview-label { font-size: 11px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); }
+    .modal-preview .preview-grade { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; }
+    .modal-preview .preview-remark { font-size: 12px; font-weight: 500; }
 
     /* ─── TOAST ─── */
     #toast {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 11px 16px;
+      padding: 10px 16px;
       font-size: 13px;
       color: var(--text);
       box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-      transform: translateY(20px);
       opacity: 0;
-      transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      transition: all 0.3s cubic-bezier(0.34,1.4,0.64,1);
       z-index: 9999;
       display: flex;
       align-items: center;
       gap: 8px;
-      max-width: calc(100vw - 48px);
+      white-space: nowrap;
+      max-width: calc(100vw - 32px);
     }
-    #toast.show { transform: translateY(0); opacity: 1; }
+    #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 940px) {
+    /* ─── TABLET (≤960px) ─── */
+    @media (max-width: 960px) {
       .layout {
         grid-template-columns: 1fr;
-        gap: 16px;
-        margin-top: 16px;
-        padding: 0 16px;
+        margin: 16px auto 48px;
+        padding: 0 14px;
+        gap: 14px;
       }
-      .sidebar .card:not(:first-child) { display: none; }
-      .sidebar.open .card { display: block; }
-      .sidebar-toggle { display: flex; }
-      header { padding: 16px 16px 0; }
-      .student-bar { flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px 16px; }
-      .bar-right { width: 100%; justify-content: space-between; align-items: center; }
-      .gwa-display { align-items: flex-start; }
-      .gwa-value { font-size: 28px; }
-      .stats-row { gap: 8px; }
-      .stat-card { padding: 12px; }
-      .stat-card .stat-val { font-size: 20px; }
+
+      .sidebar {
+        position: fixed;
+        top: 0; left: 0; bottom: 0;
+        width: min(320px, 88vw);
+        background: var(--surface);
+        border-right: 1px solid var(--border);
+        z-index: 400;
+        padding: 72px 16px 24px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        transform: translateX(-100%);
+        transition: transform 0.28s cubic-bezier(0.34,1.2,0.64,1);
+        gap: 12px;
+      }
+      .sidebar.open { transform: translateX(0); }
+      .sidebar .card { border-radius: 10px; padding: 15px; }
+
+      .nav-toggle { display: flex; }
     }
 
-    @media (max-width: 540px) {
-      header { padding: 14px 12px 0; }
-      .layout { padding: 0 12px; margin-top: 12px; gap: 12px; }
-      .logo-mark { width: 36px; height: 36px; font-size: 15px; }
-      .header-title h1 { font-size: 16px; }
+    /* ─── MOBILE (≤600px) ─── */
+    @media (max-width: 600px) {
+      :root { --header-h: 58px; }
+
+      header { padding: 0 12px; }
+      .logo-mark { width: 34px; height: 34px; font-size: 14px; }
+      .header-title h1 { font-size: 15px; }
       .header-title p { display: none; }
-      .card { padding: 14px; }
-      .modal { padding: 18px; }
+
+      .layout { padding: 0 10px; margin-top: 12px; gap: 10px; }
+
+      .student-bar { padding: 12px 14px; gap: 10px; }
+      .student-info { flex: 1; min-width: 0; }
+      .avatar { width: 36px; height: 36px; font-size: 14px; }
+      .student-details h3 { font-size: 14px; }
+      .bar-right { width: 100%; flex-wrap: nowrap; justify-content: space-between; }
+      .gwa-display { align-items: flex-start; }
+      .gwa-value { font-size: 24px; }
+      .bar-actions { gap: 5px; }
+      .btn-danger span, .btn-warning span { display: none; }
+
+      .stats-row { gap: 8px; }
+      .stat-card { padding: 11px 12px; }
+      .stat-card .stat-val { font-size: 20px; }
+      .stat-card .stat-lbl { font-size: 10px; }
+
+      .table-header { padding: 12px 14px 10px; }
+      .weight-legend { padding: 8px 14px; gap: 5px; }
+      .weight-chip { font-size: 10px; padding: 2px 8px; }
+
+      .modal { padding: 18px 16px 28px; }
+      .comp-grid { gap: 7px; }
+      .comp-grid-item { padding: 9px 10px; }
+
+      .td-action-inner { flex-direction: column; gap: 4px; }
+      .btn-danger, .btn-warning { padding: 5px 8px; font-size: 11px; }
+    }
+
+    /* ─── SMALL MOBILE (≤380px) ─── */
+    @media (max-width: 380px) {
       .comp-grid { grid-template-columns: 1fr; }
-      #toast { bottom: 16px; right: 12px; left: 12px; max-width: unset; }
+      .comp-grid-item[style*="span 2"] { grid-column: span 1; }
+      .stats-row { grid-template-columns: repeat(3,1fr); gap: 6px; }
+      .stat-card .stat-val { font-size: 18px; }
+      .gwa-value { font-size: 22px; }
+    }
+
+    /* ─── LANDSCAPE PHONE ─── */
+    @media (max-height: 500px) and (max-width: 900px) {
+      :root { --header-h: 52px; }
+      .modal { max-height: 85vh; border-radius: var(--radius) var(--radius) 0 0; }
+      .modal::before { margin-bottom: 12px; }
+    }
+
+    /* ─── DESKTOP (≥1200px) ─── */
+    @media (min-width: 1200px) {
+      .layout { grid-template-columns: 300px 1fr; gap: 20px; }
+    }
+
+    /* Safe area inset for iPhone notch/home indicator */
+    @supports (padding-bottom: env(safe-area-inset-bottom)) {
+      .modal { padding-bottom: calc(28px + env(safe-area-inset-bottom)); }
+      #toast { bottom: calc(20px + env(safe-area-inset-bottom)); }
     }
   </style>
 </head>
@@ -763,11 +718,16 @@
       <p>GWA Tracker</p>
     </div>
   </div>
-  <button class="sidebar-toggle" onclick="toggleSidebar()">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    Menu
-  </button>
+  <div class="header-right">
+    <button class="nav-toggle" id="navToggle" onclick="toggleSidebar()" aria-label="Open menu">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      Menu
+    </button>
+  </div>
 </header>
+
+<!-- Drawer overlay (mobile) -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeSidebar()"></div>
 
 <div class="layout">
 
@@ -793,12 +753,12 @@
         <label>Section</label>
         <input type="text" id="section" placeholder="e.g. Grade 10-A">
       </div>
-      <div class="form-group" style="margin-bottom:14px">
+      <div class="form-group" style="margin-bottom:12px">
         <label>Grade Level</label>
         <input type="text" id="course" placeholder="e.g. Grade 10">
       </div>
       <button class="btn btn-primary" onclick="createStudent()">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
         Create Student
       </button>
     </div>
@@ -809,12 +769,12 @@
         <label>Subject Name</label>
         <input type="text" id="subject" placeholder="e.g. Mathematics">
       </div>
-      <div class="form-group" style="margin-bottom:14px">
+      <div class="form-group" style="margin-bottom:12px">
         <label>Units / Credits</label>
-        <input type="number" id="units" placeholder="e.g. 3" min="1" max="6">
+        <input type="number" id="units" placeholder="e.g. 3" min="1" max="6" inputmode="numeric">
       </div>
       <button class="btn btn-primary" onclick="addSubject()">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
         Add Subject
       </button>
     </div>
@@ -841,11 +801,11 @@
         <div class="bar-actions">
           <button class="btn btn-warning" onclick="openEditStudent()">
             <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-            Edit
+            <span>Edit</span>
           </button>
           <button class="btn btn-danger" onclick="deleteStudent()">
             <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
-            Delete
+            <span>Delete</span>
           </button>
         </div>
       </div>
@@ -874,11 +834,10 @@
         <h3>Subject Records</h3>
         <span class="subject-count" id="subjCountBadge">0 subjects</span>
       </div>
-      <!-- Weight Legend -->
       <div class="weight-legend">
-        <div class="weight-chip"><div class="dot" style="background:#60a5fa"></div>Assignment 10%</div>
+        <div class="weight-chip"><div class="dot" style="background:#60a5fa"></div>Assign 10%</div>
         <div class="weight-chip"><div class="dot" style="background:#a78bfa"></div>Quiz 20%</div>
-        <div class="weight-chip"><div class="dot" style="background:#34d399"></div>Laboratory 30%</div>
+        <div class="weight-chip"><div class="dot" style="background:#34d399"></div>Lab 30%</div>
         <div class="weight-chip"><div class="dot" style="background:#f87171"></div>Exam 30%</div>
         <div class="weight-chip"><div class="dot" style="background:#fbbf24"></div>Behavior 10%</div>
       </div>
@@ -892,7 +851,7 @@
               <th class="th-center">Lab<br><span style="color:var(--accent);font-size:9px">30%</span></th>
               <th class="th-center">Exam<br><span style="color:var(--accent);font-size:9px">30%</span></th>
               <th class="th-center">Behavior<br><span style="color:var(--accent);font-size:9px">10%</span></th>
-              <th class="th-center">Final Grade</th>
+              <th class="th-center">Grade</th>
               <th style="text-align:right">Actions</th>
             </tr>
           </thead>
@@ -917,7 +876,7 @@
 <div class="modal-overlay" id="editStudentModal">
   <div class="modal">
     <div class="modal-title">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
       Edit Student Info
     </div>
     <div class="modal-form-group">
@@ -928,7 +887,7 @@
       <label>Section</label>
       <input type="text" id="editSection" placeholder="Section">
     </div>
-    <div class="modal-form-group" style="margin-bottom:20px">
+    <div class="modal-form-group" style="margin-bottom:18px">
       <label>Grade Level</label>
       <input type="text" id="editCourse" placeholder="Grade Level">
     </div>
@@ -943,43 +902,40 @@
 <div class="modal-overlay" id="editSubjectModal">
   <div class="modal">
     <div class="modal-title">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
       Enter / Edit Grades
     </div>
     <input type="hidden" id="editSubjectId">
-
-    <div class="modal-form-group" style="margin-bottom:12px">
+    <div class="modal-form-group" style="margin-bottom:10px">
       <label>Subject Name</label>
       <input type="text" id="editSubjectName" placeholder="Subject Name">
     </div>
-    <div class="modal-form-group" style="margin-bottom:16px">
+    <div class="modal-form-group" style="margin-bottom:14px">
       <label>Units / Credits</label>
-      <input type="number" id="editSubjectUnits" placeholder="Units" min="1" max="6">
+      <input type="number" id="editSubjectUnits" placeholder="Units" min="1" max="6" inputmode="numeric">
     </div>
-
     <div class="comp-grid">
       <div class="comp-grid-item">
         <label>Assignment <span class="pct-badge">10%</span></label>
-        <input type="number" id="compAssign" placeholder="0 – 100" min="0" max="100" step="0.01" oninput="updateModalPreview()">
+        <input type="number" id="compAssign" placeholder="0–100" min="0" max="100" step="0.01" inputmode="decimal" oninput="updateModalPreview()">
       </div>
       <div class="comp-grid-item">
         <label>Quiz <span class="pct-badge">20%</span></label>
-        <input type="number" id="compQuiz" placeholder="0 – 100" min="0" max="100" step="0.01" oninput="updateModalPreview()">
+        <input type="number" id="compQuiz" placeholder="0–100" min="0" max="100" step="0.01" inputmode="decimal" oninput="updateModalPreview()">
       </div>
       <div class="comp-grid-item">
         <label>Laboratory <span class="pct-badge">30%</span></label>
-        <input type="number" id="compLab" placeholder="0 – 100" min="0" max="100" step="0.01" oninput="updateModalPreview()">
+        <input type="number" id="compLab" placeholder="0–100" min="0" max="100" step="0.01" inputmode="decimal" oninput="updateModalPreview()">
       </div>
       <div class="comp-grid-item">
         <label>Exam <span class="pct-badge">30%</span></label>
-        <input type="number" id="compExam" placeholder="0 – 100" min="0" max="100" step="0.01" oninput="updateModalPreview()">
+        <input type="number" id="compExam" placeholder="0–100" min="0" max="100" step="0.01" inputmode="decimal" oninput="updateModalPreview()">
       </div>
       <div class="comp-grid-item" style="grid-column: span 2;">
         <label>Behavior <span class="pct-badge">10%</span></label>
-        <input type="number" id="compBehavior" placeholder="0 – 100" min="0" max="100" step="0.01" oninput="updateModalPreview()">
+        <input type="number" id="compBehavior" placeholder="0–100" min="0" max="100" step="0.01" inputmode="decimal" oninput="updateModalPreview()">
       </div>
     </div>
-
     <div class="modal-preview">
       <div>
         <div class="preview-label">Computed Final Grade</div>
@@ -987,7 +943,6 @@
       </div>
       <div class="preview-grade" id="previewGrade">—</div>
     </div>
-
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="closeModal('editSubjectModal')">Cancel</button>
       <button class="btn btn-primary" onclick="saveEditSubject()" style="width:auto;flex:1">Save Grades</button>
@@ -995,11 +950,25 @@
   </div>
 </div>
 
-<!-- Toast -->
 <div id="toast">
   <span id="toastIcon">✓</span>
   <span id="toastMsg">Done</span>
 </div>
+
+<script>
+function toggleSidebar() {
+  const s = document.getElementById("sidebar");
+  const o = document.getElementById("drawerOverlay");
+  const isOpen = s.classList.toggle("open");
+  o.classList.toggle("open", isOpen);
+  document.body.style.overflow = isOpen ? "hidden" : "";
+}
+function closeSidebar() {
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("drawerOverlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+</script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -1022,7 +991,6 @@ const db = getFirestore(app);
 let currentStudentId = null;
 let currentStudentData = null;
 
-// ── Grade component weights
 const WEIGHTS = { assign: 0.10, quiz: 0.20, lab: 0.30, exam: 0.30, behavior: 0.10 };
 
 function calcFinalGrade(components) {
@@ -1041,7 +1009,6 @@ function calcFinalGrade(components) {
   return weighted / totalW;
 }
 
-// ── Utils ──
 function showToast(msg, icon = "✓") {
   const t = document.getElementById("toast");
   document.getElementById("toastMsg").textContent = msg;
@@ -1081,17 +1048,16 @@ function getRemark(avg) {
   return { text: "Did Not Meet Expectations", color: "#f87171", bg: "rgba(248,113,113,0.12)" };
 }
 
-function openModal(id) { document.getElementById(id).classList.add("open"); }
-function closeModal(id) { document.getElementById(id).classList.remove("open"); }
+function openModal(id) { document.getElementById(id).classList.add("open"); document.body.style.overflow = "hidden"; }
+function closeModal(id) { document.getElementById(id).classList.remove("open"); document.body.style.overflow = ""; }
 window.closeModal = closeModal;
 
 document.querySelectorAll(".modal-overlay").forEach(overlay => {
   overlay.addEventListener("click", e => {
-    if (e.target === overlay) overlay.classList.remove("open");
+    if (e.target === overlay) { overlay.classList.remove("open"); document.body.style.overflow = ""; }
   });
 });
 
-// ── Modal preview live update ──
 window.updateModalPreview = function() {
   const comps = {
     assign:   document.getElementById("compAssign").value,
@@ -1116,7 +1082,6 @@ window.updateModalPreview = function() {
   }
 };
 
-// ── Student bar ──
 function updateStudentBar(data) {
   const bar = document.getElementById("studentBar");
   const statsRow = document.getElementById("statsRow");
@@ -1128,7 +1093,6 @@ function updateStudentBar(data) {
   document.getElementById("barMeta").textContent = `${data.section} · ${data.course}`;
 }
 
-// ── Load students ──
 async function loadStudents() {
   const select = document.getElementById("studentSelect");
   select.innerHTML = '<option value="">— Choose a student —</option>';
@@ -1142,7 +1106,6 @@ async function loadStudents() {
   });
 }
 
-// ── Select student ──
 async function selectStudent() {
   currentStudentId = document.getElementById("studentSelect").value;
   if (!currentStudentId) {
@@ -1161,7 +1124,6 @@ async function selectStudent() {
 }
 window.selectStudent = selectStudent;
 
-// ── Create student ──
 async function createStudent() {
   const name = document.getElementById("studentName").value.trim();
   const section = document.getElementById("section").value.trim();
@@ -1182,26 +1144,20 @@ async function createStudent() {
   updateStudentBar(currentStudentData);
   loadSubjects();
   showToast(`Student "${name}" created!`, "🎓");
-
-  if (window.innerWidth <= 940) document.getElementById("sidebar").classList.remove("open");
+  closeSidebar();
 }
 window.createStudent = createStudent;
 
-// ── Delete student ──
 window.deleteStudent = async function() {
   if (!currentStudentId || !currentStudentData) return;
   if (!confirm(`Delete "${currentStudentData.name}" and ALL their subjects? This cannot be undone.`)) return;
-
   const subjectsSnap = await getDocs(collection(db, "students", currentStudentId, "subjects"));
   const delPromises = [];
   subjectsSnap.forEach(s => delPromises.push(deleteDoc(s.ref)));
   await Promise.all(delPromises);
   await deleteDoc(doc(db, "students", currentStudentId));
-
   const deletedName = currentStudentData.name;
-  currentStudentId = null;
-  currentStudentData = null;
-
+  currentStudentId = null; currentStudentData = null;
   await loadStudents();
   updateStudentBar(null);
   document.getElementById("subjectList").innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📋</div><p>Select a student to view their subjects</p></div></td></tr>`;
@@ -1214,7 +1170,6 @@ window.deleteStudent = async function() {
   showToast(`"${deletedName}" deleted`, "🗑️");
 };
 
-// ── Edit student modal ──
 window.openEditStudent = function() {
   if (!currentStudentData) return;
   document.getElementById("editName").value = currentStudentData.name || "";
@@ -1237,59 +1192,46 @@ window.saveEditStudent = async function() {
   showToast("Student info updated!", "✏️");
 };
 
-// ── Add subject ──
 async function addSubject() {
   if (!currentStudentId) { showToast("Select or create a student first", "⚠️"); return; }
   const subject = document.getElementById("subject").value.trim();
   const units = parseFloat(document.getElementById("units").value);
   if (!subject || !units) { showToast("Fill subject name and units", "⚠️"); return; }
-
   const subjectsRef = collection(db, "students", currentStudentId, "subjects");
   await addDoc(subjectsRef, {
     subject, units,
     components: { assign: null, quiz: null, lab: null, exam: null, behavior: null },
     grade: null
   });
-
   document.getElementById("subject").value = "";
   document.getElementById("units").value = "";
   loadSubjects();
   showToast(`"${subject}" added`, "📘");
-
-  if (window.innerWidth <= 940) document.getElementById("sidebar").classList.remove("open");
+  closeSidebar();
 }
 window.addSubject = addSubject;
 
-// ── Load subjects ──
 async function loadSubjects() {
   const tbody = document.getElementById("subjectList");
   tbody.innerHTML = "";
   if (!currentStudentId) return;
-
   const subjectsRef = collection(db, "students", currentStudentId, "subjects");
   const snapshot = await getDocs(subjectsRef);
-
   let totalUnits = 0, totalWeighted = 0, graded = 0;
   const rows = [];
-
   snapshot.forEach(docSnap => {
     const d = docSnap.data();
     const finalGrade = d.grade !== null && d.grade !== undefined ? d.grade : calcFinalGrade(d.components || {});
-    if (finalGrade !== null) {
-      totalUnits += d.units;
-      totalWeighted += d.units * finalGrade;
-      graded++;
-    }
+    if (finalGrade !== null) { totalUnits += d.units; totalWeighted += d.units * finalGrade; graded++; }
     rows.push({ id: docSnap.id, ...d, finalGrade });
   });
-
   document.getElementById("statSubjects").textContent = rows.length;
   document.getElementById("statUnits").textContent = rows.reduce((s, r) => s + r.units, 0);
   document.getElementById("statGraded").textContent = graded;
   document.getElementById("subjCountBadge").textContent = `${rows.length} subject${rows.length !== 1 ? "s" : ""}`;
 
   if (rows.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📚</div><p>No subjects yet. Add one from the sidebar.</p></div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📚</div><p>No subjects yet. Add one from the menu.</p></div></td></tr>`;
     document.getElementById("gwa").textContent = "—";
     document.getElementById("gwaRemark").textContent = "";
     return;
@@ -1313,7 +1255,7 @@ async function loadSubjects() {
     tr.innerHTML = `
       <td>
         <div class="subject-name">${data.subject}</div>
-        <div style="font-size:11px;color:var(--text-muted);margin-top:2px">${data.units} unit${data.units !== 1 ? "s" : ""}</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:1px">${data.units} unit${data.units !== 1 ? "s" : ""}</div>
       </td>
       ${compCell(c.assign,   "#60a5fa")}
       ${compCell(c.quiz,     "#a78bfa")}
@@ -1347,19 +1289,16 @@ async function loadSubjects() {
   const avg = totalUnits > 0 ? totalWeighted / totalUnits : null;
   const avgStr = avg !== null ? avg.toFixed(2) : "—";
   document.getElementById("gwa").textContent = avgStr;
-
   const remark = getRemark(avgStr);
   const remarkEl = document.getElementById("gwaRemark");
   remarkEl.textContent = remark.text;
   remarkEl.style.background = remark.bg;
   remarkEl.style.color = remark.color;
-
   if (avg !== null) {
     await setDoc(doc(db, "students", currentStudentId), { gwa: avgStr }, { merge: true });
   }
 }
 
-// ── Delete subject ──
 window.deleteSubject = async function(subjectId) {
   if (!currentStudentId) return;
   if (!confirm("Remove this subject?")) return;
@@ -1368,20 +1307,15 @@ window.deleteSubject = async function(subjectId) {
   showToast("Subject removed", "🗑️");
 };
 
-// ── Edit/grade subject modal ──
 let _subjectCache = {};
-
 window.openEditSubject = async function(id) {
-  // Load fresh data
   const subjectsRef = collection(db, "students", currentStudentId, "subjects");
   const snapshot = await getDocs(subjectsRef);
   let data = null;
   snapshot.forEach(d => { if (d.id === id) data = { id: d.id, ...d.data() }; });
   if (!data) return;
-
   _subjectCache = data;
   const c = data.components || {};
-
   document.getElementById("editSubjectId").value = id;
   document.getElementById("editSubjectName").value = data.subject || "";
   document.getElementById("editSubjectUnits").value = data.units || "";
@@ -1390,7 +1324,6 @@ window.openEditSubject = async function(id) {
   document.getElementById("compLab").value      = c.lab      ?? "";
   document.getElementById("compExam").value     = c.exam     ?? "";
   document.getElementById("compBehavior").value = c.behavior ?? "";
-
   window.updateModalPreview();
   openModal("editSubjectModal");
 };
@@ -1399,11 +1332,8 @@ window.saveEditSubject = async function() {
   const id    = document.getElementById("editSubjectId").value;
   const name  = document.getElementById("editSubjectName").value.trim();
   const units = parseFloat(document.getElementById("editSubjectUnits").value);
-
   if (!name || !units) { showToast("Fill subject name and units", "⚠️"); return; }
-
   const toNum = v => (v === "" || v === null) ? null : parseFloat(v);
-
   const components = {
     assign:   toNum(document.getElementById("compAssign").value),
     quiz:     toNum(document.getElementById("compQuiz").value),
@@ -1411,17 +1341,12 @@ window.saveEditSubject = async function() {
     exam:     toNum(document.getElementById("compExam").value),
     behavior: toNum(document.getElementById("compBehavior").value),
   };
-
   const finalGrade = calcFinalGrade(components);
-
   const subjectRef = doc(db, "students", currentStudentId, "subjects", id);
   await setDoc(subjectRef, {
-    subject: name,
-    units,
-    components,
+    subject: name, units, components,
     grade: finalGrade !== null ? parseFloat(finalGrade.toFixed(2)) : null
   }, { merge: true });
-
   closeModal("editSubjectModal");
   loadSubjects();
   showToast("Grades saved!", "✅");
