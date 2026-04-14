@@ -49,7 +49,6 @@
       z-index: 0;
     }
 
-    /* ─── HEADER ─── */
     header {
       position: sticky;
       top: 0;
@@ -101,7 +100,6 @@
 
     .header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 
-    /* ─── MOBILE NAV TOGGLE ─── */
     .nav-toggle {
       display: none;
       background: var(--surface2);
@@ -117,7 +115,6 @@
       gap: 6px;
     }
 
-    /* ─── DRAWER OVERLAY ─── */
     .drawer-overlay {
       display: none;
       position: fixed;
@@ -129,7 +126,6 @@
     }
     .drawer-overlay.open { display: block; }
 
-    /* ─── SIDEBAR — always fixed, slides in/out ─── */
     .sidebar {
       position: fixed;
       top: var(--header-h);
@@ -145,12 +141,10 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
-      /* Desktop: always visible, no transform needed */
       transform: none;
     }
     .sidebar .card { background: var(--surface); }
 
-    /* ─── MAIN LAYOUT — offset left by sidebar width on desktop ─── */
     .layout {
       position: relative;
       z-index: 1;
@@ -161,7 +155,6 @@
 
     .main { display: flex; flex-direction: column; gap: 14px; max-width: 900px; margin: 0 auto; }
 
-    /* ─── CARD ─── */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -191,7 +184,6 @@
       flex-shrink: 0;
     }
 
-    /* ─── SELECT ─── */
     .select-wrapper { position: relative; }
     select {
       width: 100%;
@@ -218,7 +210,6 @@
       font-size: 12px;
     }
 
-    /* ─── INPUTS ─── */
     .form-group { margin-bottom: 10px; }
     .form-group label {
       display: block;
@@ -245,7 +236,6 @@
     input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
     input::placeholder { color: var(--text-muted); }
 
-    /* ─── BUTTONS ─── */
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
       padding: 9px 14px;
@@ -297,10 +287,6 @@
     }
     .btn-row .btn-primary { flex: 1; width: auto; }
 
-    /* ─── MAIN CONTENT ─── */
-    .main { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
-
-    /* ─── STUDENT BAR ─── */
     .student-bar {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -357,7 +343,6 @@
     }
     .bar-actions { display: flex; gap: 6px; align-items: center; }
 
-    /* ─── STATS ROW ─── */
     .stats-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -376,7 +361,6 @@
     .stat-card .stat-lbl { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; }
     .stat-card .stat-dot { width: 6px; height: 6px; border-radius: 50%; margin-bottom: 3px; }
 
-    /* ─── TABLE WRAPPER ─── */
     .table-wrapper {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -430,7 +414,6 @@
     tbody tr:hover { background: rgba(255,255,255,0.02); }
     .subject-name { font-weight: 500; font-size: 13px; }
 
-    /* ─── WEIGHT LEGEND ─── */
     .weight-legend {
       display: flex;
       gap: 6px;
@@ -452,7 +435,6 @@
     }
     .weight-chip .dot { width: 6px; height: 6px; border-radius: 50%; }
 
-    /* ─── FINAL GRADE BADGE ─── */
     .final-grade-cell { text-align: center; }
     .final-grade-badge {
       display: inline-flex;
@@ -470,12 +452,10 @@
     .td-action { text-align: right; }
     .td-action-inner { display: flex; gap: 5px; justify-content: flex-end; }
 
-    /* ─── EMPTY STATE ─── */
     .empty-state { padding: 44px 20px; text-align: center; }
     .empty-state .empty-icon { font-size: 34px; margin-bottom: 10px; opacity: 0.4; }
     .empty-state p { font-size: 14px; color: var(--text-muted); }
 
-    /* ─── MODAL ─── */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -506,8 +486,6 @@
       transition: transform 0.28s cubic-bezier(0.34,1.4,0.64,1);
     }
     .modal-overlay.open .modal { transform: translateY(0); }
-
-    /* Drag handle */
     .modal::before {
       content: '';
       display: block;
@@ -537,7 +515,6 @@
       text-transform: uppercase;
     }
 
-    /* ─── COMPONENT GRID ─── */
     .comp-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -585,7 +562,6 @@
     }
     .comp-grid-item input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
 
-    /* ─── MODAL PREVIEW ─── */
     .modal-preview {
       display: flex;
       align-items: center;
@@ -600,7 +576,6 @@
     .modal-preview .preview-grade { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; }
     .modal-preview .preview-remark { font-size: 12px; font-weight: 500; }
 
-    /* ─── TOAST ─── */
     #toast {
       position: fixed;
       bottom: 20px;
@@ -624,15 +599,24 @@
     }
     #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-    /* ─── TABLET/MOBILE (≤960px) ─── */
+    /* Loading spinner */
+    .loading-spinner {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     @media (max-width: 960px) {
       .layout {
-        grid-template-columns: 1fr;
         margin: 16px auto 48px;
         padding: 0 14px;
-        gap: 14px;
+        margin-left: 0;
       }
-
       .sidebar {
         display: flex !important;
         position: fixed;
@@ -650,29 +634,22 @@
         transform: translateX(-110%);
         transition: transform 0.3s cubic-bezier(0.25,0.8,0.25,1);
         gap: 12px;
-        /* prevent sidebar from occupying grid row */
-        grid-row: unset;
         margin: 0;
         height: 100dvh;
         height: 100vh;
       }
       .sidebar.open { transform: translateX(0); }
       .sidebar .card { border-radius: 10px; padding: 15px; background: var(--surface); }
-
       .nav-toggle { display: flex; }
     }
 
-    /* ─── MOBILE (≤600px) ─── */
     @media (max-width: 600px) {
       :root { --header-h: 58px; }
-
       header { padding: 0 12px; }
       .logo-mark { width: 34px; height: 34px; font-size: 14px; }
       .header-title h1 { font-size: 15px; }
       .header-title p { display: none; }
-
       .layout { padding: 0 10px; margin-top: 12px; gap: 10px; }
-
       .student-bar { padding: 12px 14px; gap: 10px; }
       .student-info { flex: 1; min-width: 0; }
       .avatar { width: 36px; height: 36px; font-size: 14px; }
@@ -682,46 +659,36 @@
       .gwa-value { font-size: 24px; }
       .bar-actions { gap: 5px; }
       .btn-danger span, .btn-warning span { display: none; }
-
       .stats-row { gap: 8px; }
       .stat-card { padding: 11px 12px; }
       .stat-card .stat-val { font-size: 20px; }
       .stat-card .stat-lbl { font-size: 10px; }
-
       .table-header { padding: 12px 14px 10px; }
       .weight-legend { padding: 8px 14px; gap: 5px; }
       .weight-chip { font-size: 10px; padding: 2px 8px; }
-
       .modal { padding: 18px 16px 28px; }
       .comp-grid { gap: 7px; }
       .comp-grid-item { padding: 9px 10px; }
-
       .td-action-inner { flex-direction: column; gap: 4px; }
       .btn-danger, .btn-warning { padding: 5px 8px; font-size: 11px; }
     }
 
-    /* ─── SMALL MOBILE (≤380px) ─── */
     @media (max-width: 380px) {
       .comp-grid { grid-template-columns: 1fr; }
-      .comp-grid-item[style*="span 2"] { grid-column: span 1; }
       .stats-row { grid-template-columns: repeat(3,1fr); gap: 6px; }
       .stat-card .stat-val { font-size: 18px; }
       .gwa-value { font-size: 22px; }
     }
 
-    /* ─── LANDSCAPE PHONE ─── */
     @media (max-height: 500px) and (max-width: 900px) {
       :root { --header-h: 52px; }
-      .modal { max-height: 85vh; border-radius: var(--radius) var(--radius) 0 0; }
-      .modal::before { margin-bottom: 12px; }
+      .modal { max-height: 85vh; }
     }
 
-    /* ─── DESKTOP (≥1200px) ─── */
-    @media (min-width: 1200px) {
-      .layout { grid-template-columns: 300px 1fr; gap: 20px; }
+    @media (min-width: 961px) {
+      .layout { margin-left: 280px; }
     }
 
-    /* Safe area inset for iPhone notch/home indicator */
     @supports (padding-bottom: env(safe-area-inset-bottom)) {
       .modal { padding-bottom: calc(28px + env(safe-area-inset-bottom)); }
       #toast { bottom: calc(20px + env(safe-area-inset-bottom)); }
@@ -746,62 +713,56 @@
   </div>
 </header>
 
-<!-- Drawer overlay (mobile) -->
 <div class="drawer-overlay" id="drawerOverlay" onclick="closeSidebar()"></div>
 
-<!-- ─── SIDEBAR (outside grid — always a fixed drawer on mobile, static on desktop) ─── -->
 <aside class="sidebar" id="sidebar">
-
-    <div class="card">
-      <div class="card-label">Select Student</div>
-      <div class="select-wrapper">
-        <select id="studentSelect" onchange="selectStudent()">
-          <option value="">— Choose a student —</option>
-        </select>
-      </div>
+  <div class="card">
+    <div class="card-label">Select Student</div>
+    <div class="select-wrapper">
+      <select id="studentSelect" onchange="selectStudent()">
+        <option value="">— Choose a student —</option>
+      </select>
     </div>
+  </div>
 
-    <div class="card">
-      <div class="card-label">New Student</div>
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" id="studentName" placeholder="e.g. Maria Santos">
-      </div>
-      <div class="form-group">
-        <label>Section</label>
-        <input type="text" id="section" placeholder="e.g. Grade 10-A">
-      </div>
-      <div class="form-group" style="margin-bottom:12px">
-        <label>Grade Level</label>
-        <input type="text" id="course" placeholder="e.g. Grade 10">
-      </div>
-      <button class="btn btn-primary" onclick="createStudent()">
-        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-        Create Student
-      </button>
+  <div class="card">
+    <div class="card-label">New Student</div>
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" id="studentName" placeholder="e.g. Maria Santos">
     </div>
-
-    <div class="card">
-      <div class="card-label">Add Subject</div>
-      <div class="form-group">
-        <label>Subject Name</label>
-        <input type="text" id="subject" placeholder="e.g. Mathematics">
-      </div>
-      <div class="form-group" style="margin-bottom:12px">
-        <label>Units / Credits</label>
-        <input type="number" id="units" placeholder="e.g. 3" min="1" max="6" inputmode="numeric">
-      </div>
-      <button class="btn btn-primary" onclick="addSubject()">
-        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-        Add Subject
-      </button>
+    <div class="form-group">
+      <label>Section</label>
+      <input type="text" id="section" placeholder="e.g. Grade 10-A">
     </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label>Grade Level</label>
+      <input type="text" id="course" placeholder="e.g. Grade 10">
+    </div>
+    <button class="btn btn-primary" onclick="createStudent()">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      Create Student
+    </button>
+  </div>
 
-  </aside>
+  <div class="card">
+    <div class="card-label">Add Subject</div>
+    <div class="form-group">
+      <label>Subject Name</label>
+      <input type="text" id="subject" placeholder="e.g. Mathematics">
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label>Units / Credits</label>
+      <input type="number" id="units" placeholder="e.g. 3" min="1" max="6" inputmode="numeric">
+    </div>
+    <button class="btn btn-primary" onclick="addSubject()">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      Add Subject
+    </button>
+  </div>
+</aside>
 
 <div class="layout">
-
-  <!-- ─── MAIN ─── -->
   <main class="main">
 
     <div class="student-bar" id="studentBar" style="display:none">
@@ -892,7 +853,7 @@
   </main>
 </div>
 
-<!-- ─── EDIT STUDENT MODAL ─── -->
+<!-- EDIT STUDENT MODAL -->
 <div class="modal-overlay" id="editStudentModal">
   <div class="modal">
     <div class="modal-title">
@@ -918,7 +879,7 @@
   </div>
 </div>
 
-<!-- ─── EDIT SUBJECT MODAL ─── -->
+<!-- EDIT SUBJECT MODAL -->
 <div class="modal-overlay" id="editSubjectModal">
   <div class="modal">
     <div class="modal-title">
@@ -993,7 +954,7 @@ function closeSidebar() {
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
-  getFirestore, collection, doc, addDoc, setDoc, getDocs, deleteDoc
+  getFirestore, collection, doc, addDoc, setDoc, getDoc, getDocs, deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -1102,6 +1063,18 @@ window.updateModalPreview = function() {
   }
 };
 
+function resetMainUI() {
+  document.getElementById("studentBar").style.display = "none";
+  document.getElementById("statsRow").style.display = "none";
+  document.getElementById("subjectList").innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📋</div><p>Select a student to view their subjects</p></div></td></tr>`;
+  document.getElementById("gwa").textContent = "—";
+  document.getElementById("gwaRemark").textContent = "";
+  document.getElementById("subjCountBadge").textContent = "0 subjects";
+  document.getElementById("statSubjects").textContent = "0";
+  document.getElementById("statUnits").textContent = "0";
+  document.getElementById("statGraded").textContent = "0";
+}
+
 function updateStudentBar(data) {
   const bar = document.getElementById("studentBar");
   const statsRow = document.getElementById("statsRow");
@@ -1115,6 +1088,7 @@ function updateStudentBar(data) {
 
 async function loadStudents() {
   const select = document.getElementById("studentSelect");
+  const prevId = select.value;
   select.innerHTML = '<option value="">— Choose a student —</option>';
   const snapshot = await getDocs(collection(db, "students"));
   snapshot.forEach(docSnap => {
@@ -1124,23 +1098,44 @@ async function loadStudents() {
     opt.textContent = `${d.name} · ${d.section}`;
     select.appendChild(opt);
   });
+  // Restore selection if still exists
+  if (prevId) select.value = prevId;
 }
 
+// ✅ FIXED: Use getDoc (single document fetch) instead of scanning entire collection
 async function selectStudent() {
   currentStudentId = document.getElementById("studentSelect").value;
+
   if (!currentStudentId) {
     currentStudentData = null;
-    updateStudentBar(null);
-    document.getElementById("subjectList").innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📋</div><p>Select a student to view their subjects</p></div></td></tr>`;
-    document.getElementById("gwa").textContent = "—";
-    document.getElementById("gwaRemark").textContent = "";
-    document.getElementById("subjCountBadge").textContent = "0 subjects";
+    resetMainUI();
     return;
   }
-  const snapshot = await getDocs(collection(db, "students"));
-  snapshot.forEach(d => { if (d.id === currentStudentId) currentStudentData = d.data(); });
-  updateStudentBar(currentStudentData);
-  loadSubjects();
+
+  try {
+    // Show loading state
+    document.getElementById("subjectList").innerHTML = `<tr><td colspan="8" style="text-align:center;padding:32px"><div class="loading-spinner"></div></td></tr>`;
+    document.getElementById("studentBar").style.display = "none";
+    document.getElementById("statsRow").style.display = "none";
+
+    // ✅ Direct single-document fetch — much faster and reliable
+    const studentRef = doc(db, "students", currentStudentId);
+    const studentSnap = await getDoc(studentRef);
+
+    if (!studentSnap.exists()) {
+      showToast("Student not found", "⚠️");
+      resetMainUI();
+      return;
+    }
+
+    currentStudentData = studentSnap.data();
+    updateStudentBar(currentStudentData);
+    await loadSubjects();
+  } catch (err) {
+    console.error("Error loading student:", err);
+    showToast("Error loading student data", "❌");
+    resetMainUI();
+  }
 }
 window.selectStudent = selectStudent;
 
@@ -1162,7 +1157,7 @@ async function createStudent() {
   await loadStudents();
   document.getElementById("studentSelect").value = currentStudentId;
   updateStudentBar(currentStudentData);
-  loadSubjects();
+  await loadSubjects();
   showToast(`Student "${name}" created!`, "🎓");
   closeSidebar();
 }
@@ -1177,16 +1172,10 @@ window.deleteStudent = async function() {
   await Promise.all(delPromises);
   await deleteDoc(doc(db, "students", currentStudentId));
   const deletedName = currentStudentData.name;
-  currentStudentId = null; currentStudentData = null;
+  currentStudentId = null;
+  currentStudentData = null;
   await loadStudents();
-  updateStudentBar(null);
-  document.getElementById("subjectList").innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📋</div><p>Select a student to view their subjects</p></div></td></tr>`;
-  document.getElementById("gwa").textContent = "—";
-  document.getElementById("gwaRemark").textContent = "";
-  document.getElementById("subjCountBadge").textContent = "0 subjects";
-  document.getElementById("statSubjects").textContent = "0";
-  document.getElementById("statUnits").textContent = "0";
-  document.getElementById("statGraded").textContent = "0";
+  resetMainUI();
   showToast(`"${deletedName}" deleted`, "🗑️");
 };
 
@@ -1225,7 +1214,7 @@ async function addSubject() {
   });
   document.getElementById("subject").value = "";
   document.getElementById("units").value = "";
-  loadSubjects();
+  await loadSubjects();
   showToast(`"${subject}" added`, "📘");
   closeSidebar();
 }
@@ -1235,87 +1224,99 @@ async function loadSubjects() {
   const tbody = document.getElementById("subjectList");
   tbody.innerHTML = "";
   if (!currentStudentId) return;
-  const subjectsRef = collection(db, "students", currentStudentId, "subjects");
-  const snapshot = await getDocs(subjectsRef);
-  let totalUnits = 0, totalWeighted = 0, graded = 0;
-  const rows = [];
-  snapshot.forEach(docSnap => {
-    const d = docSnap.data();
-    const finalGrade = d.grade !== null && d.grade !== undefined ? d.grade : calcFinalGrade(d.components || {});
-    if (finalGrade !== null) { totalUnits += d.units; totalWeighted += d.units * finalGrade; graded++; }
-    rows.push({ id: docSnap.id, ...d, finalGrade });
-  });
-  document.getElementById("statSubjects").textContent = rows.length;
-  document.getElementById("statUnits").textContent = rows.reduce((s, r) => s + r.units, 0);
-  document.getElementById("statGraded").textContent = graded;
-  document.getElementById("subjCountBadge").textContent = `${rows.length} subject${rows.length !== 1 ? "s" : ""}`;
 
-  if (rows.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📚</div><p>No subjects yet. Add one from the menu.</p></div></td></tr>`;
-    document.getElementById("gwa").textContent = "—";
-    document.getElementById("gwaRemark").textContent = "";
-    return;
-  }
+  try {
+    const subjectsRef = collection(db, "students", currentStudentId, "subjects");
+    const snapshot = await getDocs(subjectsRef);
+    let totalUnits = 0, totalWeighted = 0, graded = 0;
+    const rows = [];
 
-  rows.forEach(data => {
-    const c = data.components || {};
-    const fg = data.finalGrade;
-    const fgColor = getGradeColor(fg);
+    snapshot.forEach(docSnap => {
+      const d = docSnap.data();
+      const finalGrade = (d.grade !== null && d.grade !== undefined) ? d.grade : calcFinalGrade(d.components || {});
+      if (finalGrade !== null) {
+        totalUnits += d.units;
+        totalWeighted += d.units * finalGrade;
+        graded++;
+      }
+      rows.push({ id: docSnap.id, ...d, finalGrade });
+    });
 
-    function compCell(val, color) {
-      const disp = (val !== null && val !== undefined && val !== "") ? parseFloat(val).toFixed(0) : "—";
-      return `<td style="text-align:center">
-        <span style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:${(val !== null && val !== "") ? color : "var(--text-muted)"}">
-          ${disp}
-        </span>
-      </td>`;
+    document.getElementById("statSubjects").textContent = rows.length;
+    document.getElementById("statUnits").textContent = rows.reduce((s, r) => s + (r.units || 0), 0);
+    document.getElementById("statGraded").textContent = graded;
+    document.getElementById("subjCountBadge").textContent = `${rows.length} subject${rows.length !== 1 ? "s" : ""}`;
+
+    if (rows.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📚</div><p>No subjects yet. Add one from the menu.</p></div></td></tr>`;
+      document.getElementById("gwa").textContent = "—";
+      document.getElementById("gwaRemark").textContent = "";
+      return;
     }
 
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>
-        <div class="subject-name">${data.subject}</div>
-        <div style="font-size:11px;color:var(--text-muted);margin-top:1px">${data.units} unit${data.units !== 1 ? "s" : ""}</div>
-      </td>
-      ${compCell(c.assign,   "#60a5fa")}
-      ${compCell(c.quiz,     "#a78bfa")}
-      ${compCell(c.lab,      "#34d399")}
-      ${compCell(c.exam,     "#f87171")}
-      ${compCell(c.behavior, "#fbbf24")}
-      <td class="final-grade-cell">
-        <div class="final-grade-badge" style="border-color:${fg !== null ? fgColor : "var(--border)"}">
-          <span class="final-grade-num" style="color:${fg !== null ? fgColor : "var(--text-muted)"}">
-            ${fg !== null ? fg.toFixed(2) : "—"}
-          </span>
-          ${fg !== null ? `<span class="final-grade-rmk" style="color:${fgColor}">${getRemarkText(fg).split(" ").slice(0,2).join(" ")}</span>` : ""}
-        </div>
-      </td>
-      <td class="td-action">
-        <div class="td-action-inner">
-          <button class="btn btn-warning" onclick="openEditSubject('${data.id}')">
-            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-            Grades
-          </button>
-          <button class="btn btn-danger" onclick="deleteSubject('${data.id}')">
-            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
-            Del
-          </button>
-        </div>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
+    rows.forEach(data => {
+      const c = data.components || {};
+      const fg = data.finalGrade;
+      const fgColor = getGradeColor(fg);
 
-  const avg = totalUnits > 0 ? totalWeighted / totalUnits : null;
-  const avgStr = avg !== null ? avg.toFixed(2) : "—";
-  document.getElementById("gwa").textContent = avgStr;
-  const remark = getRemark(avgStr);
-  const remarkEl = document.getElementById("gwaRemark");
-  remarkEl.textContent = remark.text;
-  remarkEl.style.background = remark.bg;
-  remarkEl.style.color = remark.color;
-  if (avg !== null) {
-    await setDoc(doc(db, "students", currentStudentId), { gwa: avgStr }, { merge: true });
+      function compCell(val, color) {
+        const disp = (val !== null && val !== undefined && val !== "") ? parseFloat(val).toFixed(0) : "—";
+        return `<td style="text-align:center">
+          <span style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:${(val !== null && val !== "") ? color : "var(--text-muted)"}">
+            ${disp}
+          </span>
+        </td>`;
+      }
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>
+          <div class="subject-name">${data.subject}</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:1px">${data.units} unit${data.units !== 1 ? "s" : ""}</div>
+        </td>
+        ${compCell(c.assign,   "#60a5fa")}
+        ${compCell(c.quiz,     "#a78bfa")}
+        ${compCell(c.lab,      "#34d399")}
+        ${compCell(c.exam,     "#f87171")}
+        ${compCell(c.behavior, "#fbbf24")}
+        <td class="final-grade-cell">
+          <div class="final-grade-badge" style="border-color:${fg !== null ? fgColor : "var(--border)"}">
+            <span class="final-grade-num" style="color:${fg !== null ? fgColor : "var(--text-muted)"}">
+              ${fg !== null ? fg.toFixed(2) : "—"}
+            </span>
+            ${fg !== null ? `<span class="final-grade-rmk" style="color:${fgColor}">${getRemarkText(fg).split(" ").slice(0,2).join(" ")}</span>` : ""}
+          </div>
+        </td>
+        <td class="td-action">
+          <div class="td-action-inner">
+            <button class="btn btn-warning" onclick="openEditSubject('${data.id}')">
+              <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              Grades
+            </button>
+            <button class="btn btn-danger" onclick="deleteSubject('${data.id}')">
+              <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
+              Del
+            </button>
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    const avg = totalUnits > 0 ? totalWeighted / totalUnits : null;
+    const avgStr = avg !== null ? avg.toFixed(2) : "—";
+    document.getElementById("gwa").textContent = avgStr;
+    const remark = getRemark(avgStr);
+    const remarkEl = document.getElementById("gwaRemark");
+    remarkEl.textContent = remark.text;
+    remarkEl.style.background = remark.bg;
+    remarkEl.style.color = remark.color;
+    if (avg !== null) {
+      await setDoc(doc(db, "students", currentStudentId), { gwa: avgStr }, { merge: true });
+    }
+  } catch (err) {
+    console.error("Error loading subjects:", err);
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">⚠️</div><p>Error loading subjects. Please try again.</p></div></td></tr>`;
   }
 }
 
@@ -1323,29 +1324,40 @@ window.deleteSubject = async function(subjectId) {
   if (!currentStudentId) return;
   if (!confirm("Remove this subject?")) return;
   await deleteDoc(doc(db, "students", currentStudentId, "subjects", subjectId));
-  loadSubjects();
+  await loadSubjects();
   showToast("Subject removed", "🗑️");
 };
 
 let _subjectCache = {};
 window.openEditSubject = async function(id) {
-  const subjectsRef = collection(db, "students", currentStudentId, "subjects");
-  const snapshot = await getDocs(subjectsRef);
-  let data = null;
-  snapshot.forEach(d => { if (d.id === id) data = { id: d.id, ...d.data() }; });
-  if (!data) return;
-  _subjectCache = data;
-  const c = data.components || {};
-  document.getElementById("editSubjectId").value = id;
-  document.getElementById("editSubjectName").value = data.subject || "";
-  document.getElementById("editSubjectUnits").value = data.units || "";
-  document.getElementById("compAssign").value   = c.assign   ?? "";
-  document.getElementById("compQuiz").value     = c.quiz     ?? "";
-  document.getElementById("compLab").value      = c.lab      ?? "";
-  document.getElementById("compExam").value     = c.exam     ?? "";
-  document.getElementById("compBehavior").value = c.behavior ?? "";
-  window.updateModalPreview();
-  openModal("editSubjectModal");
+  try {
+    // ✅ FIXED: Use getDoc for direct fetch instead of scanning subcollection
+    const subjectRef = doc(db, "students", currentStudentId, "subjects", id);
+    const subjectSnap = await getDoc(subjectRef);
+
+    if (!subjectSnap.exists()) {
+      showToast("Subject not found", "⚠️");
+      return;
+    }
+
+    const data = { id: subjectSnap.id, ...subjectSnap.data() };
+    _subjectCache = data;
+    const c = data.components || {};
+
+    document.getElementById("editSubjectId").value = id;
+    document.getElementById("editSubjectName").value = data.subject || "";
+    document.getElementById("editSubjectUnits").value = data.units || "";
+    document.getElementById("compAssign").value   = c.assign   ?? "";
+    document.getElementById("compQuiz").value     = c.quiz     ?? "";
+    document.getElementById("compLab").value      = c.lab      ?? "";
+    document.getElementById("compExam").value     = c.exam     ?? "";
+    document.getElementById("compBehavior").value = c.behavior ?? "";
+    window.updateModalPreview();
+    openModal("editSubjectModal");
+  } catch (err) {
+    console.error("Error opening subject:", err);
+    showToast("Error loading subject", "❌");
+  }
 };
 
 window.saveEditSubject = async function() {
@@ -1368,10 +1380,11 @@ window.saveEditSubject = async function() {
     grade: finalGrade !== null ? parseFloat(finalGrade.toFixed(2)) : null
   }, { merge: true });
   closeModal("editSubjectModal");
-  loadSubjects();
+  await loadSubjects();
   showToast("Grades saved!", "✅");
 };
 
+// Initialize
 loadStudents();
 </script>
 </body>
